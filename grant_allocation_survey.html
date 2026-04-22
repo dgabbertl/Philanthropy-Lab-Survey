@@ -1,265 +1,221 @@
-
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-sans); }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+
 .page { display: none; padding: 1.5rem 0; }
 .page.active { display: block; }
-.section-label { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+
+.section-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
 .fixed-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.fixed-table td { padding: 8px 12px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); }
-.fixed-table td:last-child { text-align: right; color: var(--color-text-secondary); }
-.fixed-table tr.total td { font-weight: 500; border-top: 0.5px solid var(--color-border-secondary); border-bottom: none; }
-.fixed-table tr.pool td { font-weight: 500; color: var(--color-text-info); border-bottom: none; }
-.budget-bar-wrap { background: var(--color-background-secondary); border-radius: var(--border-radius-md); overflow: hidden; height: 8px; margin: 8px 0 4px; }
-.budget-bar { height: 8px; background: var(--color-background-info); border-radius: var(--border-radius-md); transition: width 0.3s, background 0.2s; }
-.budget-bar.over { background: var(--color-background-danger); }
-.budget-sticky { position: sticky; top: 0; z-index: 10; background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 12px 0; margin-bottom: 1.5rem; }
-.budget-row { display: flex; align-items: center; justify-content: space-between; font-size: 14px; }
-.budget-amt { font-size: 18px; font-weight: 500; }
-.budget-amt.over { color: var(--color-text-danger); }
-.budget-amt.ok { color: var(--color-text-info); }
-.org-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
-.org-name { font-size: 15px; font-weight: 500; margin-bottom: 12px; }
-.input-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-.input-group label { font-size: 12px; color: var(--color-text-secondary); display: block; margin-bottom: 4px; }
-.input-group input { width: 100%; padding: 6px 10px; font-size: 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-primary); }
-.input-group input:focus { outline: none; box-shadow: 0 0 0 2px var(--color-border-info); }
-.input-group input.err { box-shadow: 0 0 0 2px var(--color-border-danger); }
-.err-msg { font-size: 12px; color: var(--color-text-danger); margin-top: 3px; }
-.nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; }
-.btn { padding: 8px 20px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; font-size: 14px; cursor: pointer; color: var(--color-text-primary); }
-.btn:hover { background: var(--color-background-secondary); }
-.btn.primary { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
-.btn.primary:hover { opacity: 0.85; }
-.step-indicator { display: flex; gap: 6px; align-items: center; }
-.step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); }
-.step-dot.active { background: var(--color-background-info); border-color: var(--color-border-info); }
-.step-dot.done { background: var(--color-text-secondary); border-color: var(--color-text-secondary); }
-.intro-card { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 14px; line-height: 1.7; color: var(--color-text-secondary); }
-.intro-card strong { color: var(--color-text-primary); font-weight: 500; }
-textarea { width: 100%; min-height: 120px; padding: 10px; font-size: 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-primary); resize: vertical; font-family: var(--font-sans); }
-textarea:focus { outline: none; box-shadow: 0 0 0 2px var(--color-border-info); }
-.success-block { text-align: center; padding: 2rem 0; }
-.success-icon { font-size: 32px; margin-bottom: 1rem; }
-.summary-row { display: flex; justify-content: space-between; font-size: 14px; padding: 6px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
-.summary-row:last-child { border-bottom: none; }
-.tag { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: var(--border-radius-md); }
-.tag.allocated { background: var(--color-background-success); color: var(--color-text-success); }
-.tag.unalloc { background: var(--color-background-warning); color: var(--color-text-warning); }
+.fixed-table td {
+  padding: 8px 12px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+.fixed-table td:last-child { text-align: right; }
+.fixed-table tr.total td { font-weight: 500; }
+.fixed-table tr.pool td { font-weight: 500; color: var(--color-text-info); }
+
+.intro-card {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-lg);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 14px;
+}
+
+.org-card {
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: 0.2s;
+}
+.org-card:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
+}
+
+.org-name { font-weight: 600; margin-bottom: 4px; }
+
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.input-group label { font-size: 12px; }
+.input-group input {
+  width: 100%;
+  padding: 6px;
+}
+
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 8px 18px;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: #378ADD;
+  color: white;
+  border: none;
+}
+
+.budget-sticky {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 10px 0;
+  margin-bottom: 1rem;
+}
+
 </style>
 
-<h2 class="sr-only">Grant allocation survey — 9 organizations, $91,000 pool</h2>
+<div id="app" style="max-width:700px;margin:auto;">
 
-<div id="app" style="max-width: 660px; margin: 0 auto; padding: 0 4px;">
-
+<!-- STEP 1 -->
 <div class="page active" id="page-1">
-  <p class="section-label">Step 1 of 3 — Overview</p>
-  <div class="intro-card">
-    This survey helps allocate a <strong>$100,000 grant fund</strong>. Six established organizations have already been committed <strong>$500 each ($3,000 total)</strong>. The remaining <strong>$91,000</strong> is yours to distribute across nine organizations. Each must receive <strong>at least $1,000</strong>. You may allocate less than $91,000 in total — unallocated funds will be noted in group discussion. You may not exceed $91,000.
-  </div>
 
-  <p class="section-label">Fixed allocations</p>
-  <table class="fixed-table">
-    <tr><td>Org Alpha</td><td>$500</td></tr>
-    <tr><td>Org Beta</td><td>$500</td></tr>
-    <tr><td>Org Gamma</td><td>$500</td></tr>
-    <tr><td>Org Delta</td><td>$500</td></tr>
-    <tr><td>Org Epsilon</td><td>$500</td></tr>
-    <tr><td>Org Zeta</td><td>$500</td></tr>
-    <tr class="total"><td>Subtotal</td><td>$3,000</td></tr>
-    <tr class="pool"><td>Remaining pool for you to allocate</td><td>$91,000</td></tr>
-  </table>
+<p class="section-label">Overview</p>
 
-  <div class="nav-row">
-    <div class="step-indicator">
-      <div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div>
-    </div>
-    <button class="btn primary" onclick="goTo(2)">Start allocating &rarr;</button>
-  </div>
+<div class="intro-card">
+  This survey helps allocate a <strong>$100,000 grant fund</strong>.
+
+  <br><br>
+
+  <strong>Step 1:</strong> Six organizations have already been allocated <strong>$500 each ($3,000 total)</strong>.
+
+  <br>
+
+  <strong>Step 2:</strong> The nine organizations below are each guaranteed a <strong>$1,000 minimum ($9,000 total)</strong>.
+
+  <br><br>
+
+  This means the remaining <strong>$91,000</strong> is flexible and available for you to allocate.
+
+  <br><br>
+
+  ➤ Allocate at least $1,000 to each organization  
+  ➤ Do not exceed $91,000 total  
 </div>
 
+<table class="fixed-table">
+<tr><td>Christian Women's Job Corp</td><td>$500</td></tr>
+<tr><td>Family Abuse Center</td><td>$500</td></tr>
+<tr><td>Unbound Now</td><td>$500</td></tr>
+<tr><td>La Vega Pirates Education</td><td>$500</td></tr>
+<tr><td>Transformation Waco</td><td>$500</td></tr>
+<tr><td>World Hunger Relief</td><td>$500</td></tr>
+<tr class="total"><td>Total fixed</td><td>$3,000</td></tr>
+<tr class="pool"><td>Flexible pool</td><td>$91,000</td></tr>
+</table>
+
+<div class="nav-row">
+<button class="btn primary" onclick="goTo(2)">Start →</button>
+</div>
+
+</div>
+
+<!-- STEP 2 -->
 <div class="page" id="page-2">
-  <div class="budget-sticky">
-    <div class="budget-row">
-      <span style="color: var(--color-text-secondary); font-size: 14px;">Your total allocation</span>
-      <span class="budget-amt ok" id="budget-display">$0 / $91,000</span>
-    </div>
-    <div class="budget-bar-wrap"><div class="budget-bar" id="budget-bar" style="width:0%"></div></div>
-    <div style="display:flex; justify-content: space-between; font-size: 11px; color: var(--color-text-tertiary);">
-      <span>$0</span><span id="remaining-label">$91,000 remaining</span>
-    </div>
-  </div>
 
-  <p class="section-label">Step 2 of 3 — Your allocations</p>
-  <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 1.25rem;">For each organization, enter your recommended grant, plus the minimum and maximum you believe would be effective.</p>
-
-  <div id="org-cards"></div>
-
-  <div id="alloc-error" style="display:none; font-size:13px; color: var(--color-text-danger); margin-bottom: 1rem;"></div>
-
-  <div class="nav-row">
-    <button class="btn" onclick="goTo(1)">&larr; Back</button>
-    <div class="step-indicator">
-      <div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div>
-    </div>
-    <button class="btn primary" onclick="tryNext()">Review &rarr;</button>
-  </div>
+<div class="budget-sticky">
+<strong id="budget-display">$0 / $91,000</strong>
 </div>
 
+<p class="section-label">Your allocations</p>
+
+<div id="org-cards"></div>
+
+<div class="nav-row">
+<button class="btn" onclick="goTo(1)">Back</button>
+<button class="btn primary" onclick="goTo(3)">Review</button>
+</div>
+
+</div>
+
+<!-- STEP 3 -->
 <div class="page" id="page-3">
-  <p class="section-label">Step 3 of 3 — Notes &amp; review</p>
 
-  <div id="summary-block" style="margin-bottom: 1.5rem;"></div>
+<p class="section-label">Review</p>
 
-  <p style="font-size: 14px; font-weight: 500; margin-bottom: 6px;">Optional notes</p>
-  <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 8px;">Is there anything you'd like the group to know about your allocations or reasoning?</p>
-  <textarea id="notes" placeholder="Your thoughts (optional)..."></textarea>
+<div id="summary"></div>
 
-  <div class="nav-row">
-    <button class="btn" onclick="goTo(2)">&larr; Back</button>
-    <div class="step-indicator">
-      <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div>
-    </div>
-    <button class="btn primary" onclick="submit()">Submit response</button>
-  </div>
+<div class="nav-row">
+<button class="btn" onclick="goTo(2)">Back</button>
+<button class="btn primary" onclick="goTo(4)">Submit</button>
 </div>
 
+</div>
+
+<!-- SUCCESS -->
 <div class="page" id="page-4">
-  <div class="success-block">
-    <div class="success-icon">&#10003;</div>
-    <p style="font-size: 18px; font-weight: 500; margin-bottom: 8px;">Response submitted</p>
-    <p style="font-size: 14px; color: var(--color-text-secondary);">Thank you. Your allocations have been recorded and will be averaged with the group's responses to inform discussion.</p>
-  </div>
+<h3>Submitted ✔</h3>
 </div>
 
 </div>
 
 <script>
+
 const orgs = [
-  "Organization 1","Organization 2","Organization 3",
-  "Organization 4","Organization 5","Organization 6",
-  "Organization 7","Organization 8","Organization 9"
+"Communities in Schools",
+"Community Cancer Association",
+"La Puerta",
+"Lovely Village",
+"Mission Waco",
+"Nurse Family Practitioners",
+"Talitha Koum Institute",
+"The Cove",
+"Waco Family Medicine"
 ];
+
 const MAX = 91000;
 
-function buildCards() {
-  const container = document.getElementById('org-cards');
-  orgs.forEach((name, i) => {
-    const card = document.createElement('div');
-    card.className = 'org-card';
-    card.innerHTML = `
+function buildCards(){
+  const c = document.getElementById("org-cards");
+  orgs.forEach((name,i)=>{
+    c.innerHTML += `
+    <div class="org-card">
       <div class="org-name">${name}</div>
-      <div class="input-grid">
-        <div class="input-group">
-          <label>Recommended grant ($)</label>
-          <input type="number" id="grant-${i}" min="1000" step="100" placeholder="e.g. 8000" oninput="updateBudget(); validateGrant(${i})">
-          <div class="err-msg" id="gerr-${i}"></div>
-        </div>
-        <div class="input-group">
-          <label>Min effective grant ($)</label>
-          <input type="number" id="min-${i}" min="0" step="100" placeholder="e.g. 3000" oninput="validateRange(${i})">
-          <div class="err-msg" id="merr-${i}"></div>
-        </div>
-        <div class="input-group">
-          <label>Max effective grant ($)</label>
-          <input type="number" id="max-${i}" min="0" step="100" placeholder="e.g. 20000" oninput="validateRange(${i})">
-        </div>
-      </div>`;
-    container.appendChild(card);
+      <div style="font-size:12px;color:#777;margin-bottom:8px;">
+        Minimum: $1,000 (included)
+      </div>
+      <input type="number" id="g${i}" placeholder="Enter total grant">
+    </div>`;
   });
 }
 
-function getVal(id) {
-  const v = parseFloat(document.getElementById(id).value);
-  return isNaN(v) ? 0 : v;
+function update(){
+  let t=0;
+  orgs.forEach((_,i)=>t+=Number(document.getElementById("g"+i).value)||0);
+  document.getElementById("budget-display").innerText =
+    `$${t.toLocaleString()} / $${MAX.toLocaleString()}`;
 }
 
-function updateBudget() {
-  let total = 0;
-  orgs.forEach((_, i) => total += getVal(`grant-${i}`));
-  total = Math.round(total);
-  const pct = Math.min(100, (total / MAX) * 100);
-  const over = total > MAX;
-  const remaining = MAX - total;
-  document.getElementById('budget-display').textContent = `$${total.toLocaleString()} / $${MAX.toLocaleString()}`;
-  document.getElementById('budget-display').className = 'budget-amt ' + (over ? 'over' : 'ok');
-  document.getElementById('budget-bar').style.width = pct + '%';
-  document.getElementById('budget-bar').className = 'budget-bar' + (over ? ' over' : '');
-  document.getElementById('remaining-label').textContent = over
-    ? `$${Math.abs(remaining).toLocaleString()} over limit`
-    : `$${remaining.toLocaleString()} remaining`;
-}
+document.addEventListener("input",update);
 
-function validateGrant(i) {
-  const v = getVal(`grant-${i}`);
-  const el = document.getElementById(`grant-${i}`);
-  const err = document.getElementById(`gerr-${i}`);
-  if (v > 0 && v < 1000) {
-    el.classList.add('err'); err.textContent = 'Minimum is $1,000'; return false;
-  }
-  el.classList.remove('err'); err.textContent = ''; return true;
-}
-
-function validateRange(i) {
-  const mn = getVal(`min-${i}`), mx = getVal(`max-${i}`);
-  const el = document.getElementById(`min-${i}`);
-  const err = document.getElementById(`merr-${i}`);
-  if (mn > 0 && mx > 0 && mn > mx) {
-    el.classList.add('err'); err.textContent = 'Min must be ≤ max'; return false;
-  }
-  el.classList.remove('err'); err.textContent = ''; return true;
-}
-
-function tryNext() {
-  let total = 0, valid = true;
-  orgs.forEach((_, i) => {
-    total += getVal(`grant-${i}`);
-    if (!validateGrant(i)) valid = false;
-    if (!validateRange(i)) valid = false;
-  });
-  total = Math.round(total);
-  const errEl = document.getElementById('alloc-error');
-  if (total > MAX) {
-    errEl.style.display = 'block';
-    errEl.textContent = `Your total ($${total.toLocaleString()}) exceeds the $${MAX.toLocaleString()} pool. Please reduce some allocations.`;
-    return;
-  }
-  const allFilled = orgs.every((_, i) => getVal(`grant-${i}`) >= 1000);
-  if (!allFilled) {
-    errEl.style.display = 'block';
-    errEl.textContent = 'Please enter a recommended grant of at least $1,000 for each organization.';
-    return;
-  }
-  if (!valid) return;
-  errEl.style.display = 'none';
-  buildSummary(total);
-  goTo(3);
-}
-
-function buildSummary(total) {
-  const unalloc = MAX - total;
-  let html = `<p style="font-size:14px; font-weight:500; margin-bottom:10px;">Your allocation summary</p>`;
-  html += `<div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem;">`;
-  orgs.forEach((name, i) => {
-    const g = Math.round(getVal(`grant-${i}`));
-    const mn = Math.round(getVal(`min-${i}`));
-    const mx = Math.round(getVal(`max-${i}`));
-    const range = (mn || mx) ? ` <span style="font-size:12px; color: var(--color-text-secondary);">(range: $${mn.toLocaleString()}–$${mx.toLocaleString()})</span>` : '';
-    html += `<div class="summary-row"><span>${name}</span><span>$${g.toLocaleString()}${range}</span></div>`;
-  });
-  html += `<div class="summary-row" style="margin-top:6px; font-weight:500;"><span>Total allocated</span><span>$${total.toLocaleString()} <span class="tag ${unalloc >= 0 ? 'allocated' : 'unalloc'}">${unalloc >= 0 ? '$'+unalloc.toLocaleString()+' unallocated' : 'over limit'}</span></span></div>`;
-  html += `</div>`;
-  document.getElementById('summary-block').innerHTML = html;
-}
-
-function submit() {
-  goTo(4);
-}
-
-function goTo(n) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(`page-${n}`).classList.add('active');
+function goTo(n){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page-"+n).classList.add("active");
 }
 
 buildCards();
+
 </script>
